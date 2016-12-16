@@ -18,16 +18,27 @@ namespace BeeHive
         {
             InitializeComponent();
             Worker[] workers = new Worker[4];
-            workers[0] =new Worker(new string[] {"Zbieranie nektaru", "Wytwarzanie miodu"});
-            workers[1] = new Worker(new string[] { "Troska o jaja", "Nauczanie pszczół" });
-            workers[2] = new Worker(new string[] { "Utrzymywanie ula", "Patrol z żądłami"});
-            workers[3] = new Worker(new string[] {"Zbieranie nektaru", "Wytwarzanie miodu", "Troska o jaja", "Nauczanie pszczół", "Utrzymywanie ula", "Patrol z żądłąmi"});
-            _queen= new Queen(workers);
+            workers[0] =new Worker(new string[] {"Zbieranie nektaru", "Wytwarzanie miodu"}, 175);
+            workers[1] = new Worker(new string[] { "Troska o jaja", "Nauczanie pszczół" }, 114);
+            workers[2] = new Worker(new string[] { "Utrzymywanie ula", "Patrol z żądłami"}, 149);
+            workers[3] = new Worker(new string[] {"Zbieranie nektaru", "Wytwarzanie miodu", "Troska o jaja", "Nauczanie pszczół", "Utrzymywanie ula", "Patrol z żądłąmi"}, 155);
+            _queen = new Queen(workers, 275);
+            comboBox1.SelectedItem = "Zbieranie nektaru";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _queen.AssignWork(comboBox1.Text, (int)numericUpDown1.Value);
+            if (_queen.AssignWork(comboBox1.Text, (int) numericUpDown1.Value) == false)
+            {
+                MessageBox.Show("Nie ma dostępnych robotnic do wykonania zadania '" + comboBox1.Text + "'",
+                    "Królowa pszczół mówi...");
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Zadanie '" + comboBox1.Text + "' będzie ukończone za" + numericUpDown1.Value + "zmiany",
+                    "Królowa pszczół mówi...");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

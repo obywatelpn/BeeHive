@@ -6,36 +6,53 @@ using System.Threading.Tasks;
 
 namespace BeeHive
 {
-    class Worker
+    class Worker:Bee
     {
         private string[] jobsICanDo;
         private int shiftsToWork;
         private int shiftsWorked;
 
-        public Worker(string[] jobsICanDo)
+        public Worker(string[] jobsICanDo, int beeWeight):base(beeWeight)
         {
             this.jobsICanDo = jobsICanDo;
         }
 
         public string CurrentJob { get; private set; }
+        
 
-        public int ShiftsLeft { get; private set; }
-
-        public void WorkOneShift()
+        public override int ShiftsLeft
         {
-            shiftsWorked++;
-            ShiftsLeft = shiftsToWork - shiftsWorked;
-            if (ShiftsLeft==0)
+            get { return shiftsToWork - shiftsWorked; }
+        }
+
+        public bool WorkOneShift()
+        {
+            if (string.IsNullOrEmpty(CurrentJob))
             {
-                CurrentJob = "";
+                return false;
             }
+            shiftsWorked++;
+            if (shiftsWorked > shiftsToWork)
+            {
+                shiftsWorked = 0;
+                shiftsToWork = 0;
+                CurrentJob = "";
+                return true;
+            }
+            else
+                return false;
         }
 
         public bool DoThisJob(string task, int numberOfRuns)
         {
+            if (String.IsNullOrEmpty(CurrentJob))
+            {
+                return false;
+            }
+
             foreach (string job in jobsICanDo)
             {
-                if (task==job && String.IsNullOrEmpty(CurrentJob))
+                if (task==job)
                 {
                     shiftsToWork = numberOfRuns;
                     CurrentJob = task;
