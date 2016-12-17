@@ -40,7 +40,7 @@ namespace BeeHive
         {
             return _workers.Any(worker => worker.DoThisJob(task, numberOfRuns) == true);
         }
-        
+
         public string WorkTheNextShift()
         {
             _shiftNumber++;
@@ -56,20 +56,21 @@ namespace BeeHive
             }
             overallHoneyConsumption += this.GetHoneyConsumption();
 
-            string report = "Raport zmiany numer " + _shiftNumber.ToString()+ "\r\n";
+            string report = "Raport zmiany numer " + _shiftNumber.ToString() + "\r\n";
             for (int i = 0; i < _workers.Length; i++)
             {
                 _workers[i].WorkOneShift();
                 if (String.IsNullOrEmpty(_workers[i].CurrentJob))
                 {
-                    report += "Robotnica numer" + (i+1) + " nie pracuje \r\n";
+                    report += $"Robotnica numer {i + 1} nie pracuje \r\n";
                 }
-                report += "Robotnica numer" + (i+1) + " robi \"" + _workers[i].CurrentJob +
-                          "\" jeszcze przez " + _workers[i].ShiftsLeft + " zmiany\r\n";
-                report += $"Całkowite spożycie miodu: {overallHoneyConsumption} jednostek \r\n";
-
+                else
+                {
+                    report += "Robotnica numer " + (i + 1) + " robi \"" + _workers[i].CurrentJob +
+                       "\" jeszcze przez " + _workers[i].ShiftsLeft + " zmiany\r\n";
+                }
             }
-
+            report += $"Całkowite spożycie miodu: {overallHoneyConsumption} jednostek \r\n";
             return report;
         }
     }

@@ -45,7 +45,7 @@ namespace BeeHive
 
         public bool DoThisJob(string task, int numberOfRuns)
         {
-            if (String.IsNullOrEmpty(CurrentJob))
+            if (!String.IsNullOrEmpty(CurrentJob))
             {
                 return false;
             }

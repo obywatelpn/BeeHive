@@ -35,8 +35,7 @@ namespace BeeHive
             }
             else
             {
-                MessageBox.Show(
-                    "Zadanie '" + comboBox1.Text + "' będzie ukończone za" + numericUpDown1.Value + "zmiany",
+                MessageBox.Show($"Zadanie '{comboBox1.Text}' będzie ukończone za {numericUpDown1.Value} zmiany",
                     "Królowa pszczół mówi...");
             }
         }
